@@ -52,7 +52,8 @@ module linked_list
         subroutine print_list(p)
             type(list_node), target :: p
             type(list_node), pointer :: iter
-            integer :: i = 1
+            integer :: i
+            i = 1
     
             iter=>p
             
@@ -65,4 +66,3 @@ module linked_list
         end subroutine print_list 
     
     end module linked_list
-    
