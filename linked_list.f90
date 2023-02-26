@@ -1,22 +1,21 @@
 ! Linked list module
-module linked_list
+module linked_list_module
     implicit none
     
         ! list node that holds integer
-        type list_node
+        type list
             integer :: data
-            type(list_node), pointer :: next
+            type(list), pointer :: next
         end type
         
     contains
         ! create a list in range 1 .. n
-        function create_list(n)
+        subroutine create_list(lst, n)
         implicit none
-            type(list_node), pointer :: iter
-            type(list_node), target :: create_list
+            type(list), pointer :: iter, lst
             integer :: n, i
     
-            iter=>create_list
+            iter=>lst
     
             do i=1, n
                 iter%data = i
@@ -26,36 +25,35 @@ module linked_list
     
             end do
             
-        end function create_list
+        end subroutine create_list
     
         ! create list from integer array
-        function create_list_from_array(a, n)
+        subroutine create_list_from_array(lst, arr)
             implicit none
-                integer :: n, i
-                integer, dimension(n) :: a
-                type(list_node), pointer :: iter
-                type(list_node), target :: create_list_from_array
-        
-                iter=>create_list_from_array
-        
+                integer, dimension(:), intent(in) :: arr
+                type(list), pointer :: iter, lst
+                integer :: i, n
+
+                iter=>lst
+                
+                n = size(arr)
                 do i=1, n
-                    iter%data = a(i)
+                    iter%data = arr(i)
         
                     allocate(iter%next)
                     iter=>iter%next
         
                 end do
                 
-            end function create_list_from_array
+            end subroutine create_list_from_array
         
         ! print list
-        subroutine print_list(p)
-            type(list_node), target :: p
-            type(list_node), pointer :: iter
+        subroutine print_list(lst)
+            type(list), pointer :: lst, iter
             integer :: i
             i = 1
     
-            iter=>p
+            iter=>lst
             
             do while (associated(iter%next))
                 print*, 'node', i, ': ', iter%data
@@ -65,4 +63,4 @@ module linked_list
     
         end subroutine print_list 
     
-    end module linked_list
+    end module linked_list_module
