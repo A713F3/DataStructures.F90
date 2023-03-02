@@ -1,12 +1,28 @@
 #!/bin/bash
 
+arg=$1
 compiler="gfortran"
 
-module=$1
+module_folder="modules"
+example_folder="examples"
+obj_folder="objects"
 
-$compiler -c ${module}.f90
-$compiler -c ${module}_example.f90
+module_path="${module_folder}/${arg}.f90"
+example_path="${example_folder}/${arg}_example.f90"
 
-$compiler -o ${module}.out ${module}.f90 ${module}_example.f90
+module_o="${arg}.o"
+example_o="${arg}_example.o"
 
-./${module}.out
+output="${arg}.out"
+
+$compiler -c $module_path
+$compiler -c $example_path
+
+$compiler -o $output $module_o $example_o
+
+mv $module_o $obj_folder
+mv $example_o $obj_folder
+
+mv "${arg}_module.mod" $obj_folder
+
+./$output
