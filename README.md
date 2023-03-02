@@ -1,4 +1,4 @@
-# Linked List Module for Fortran
+# Data Structure Modules for Fortran
 
 ## Compile:
 ```
